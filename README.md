@@ -1,4 +1,4 @@
-# Pay Mobile Server
+# Pay Path Server
 
 <img src="assets/pay_mobile_server_advert.png" alt="Username Transfer Showcase" title="Pay Mobile Server Advert">
 
