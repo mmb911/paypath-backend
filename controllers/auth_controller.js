@@ -3,11 +3,8 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken"
 import otpGenerator from "otp-generator"
 import nodemailer from "nodemailer"
-//import OTPSchema from "../models/otp_model";
 import OTPSchema from "../models/otp_model.js"
-//import User from "../models/user_model";
 import User from "../models/user_model.js"
-//import AdminAuthPin from "../models/admin_auth_pin_model";
 import AdminAuthPin from "../models/admin_auth_pin_model.js"
 
 
@@ -32,6 +29,7 @@ export const createUser =  async (req, res) => {
       password: hashedPassword,
     });
     user = await user.save();
+    user.password=""
     return res.status(201).json({
       message: "User created successfully",
       message: user,
@@ -45,16 +43,24 @@ export const createUser =  async (req, res) => {
 
 export const sendPerpose =  async (req, res) => {
   try {
+    console.log(
+     process.env.EMAIL_ADDRESS,
+    );
+    console.log(
+       process.env.GMAIL_PASSWORD,
+
+    );
+    
     var expiryDate = Date.now() + 120000;
     let transporter = nodemailer.createTransport({
-      service: "gmail",
+      service: "Gmail",
       auth: {
-        type: "OAuth2",
+        type: "LOGIN",
         user: process.env.EMAIL_ADDRESS,
         pass: process.env.GMAIL_PASSWORD,
-        clientId: process.env.OAUTH_CLIENT_ID,
-        clientSecret: process.env.OAUTH_CLIENT_SECRET,
-        refreshToken: process.env.OAUTH_REFRESH_TOKEN,
+        // clientId: process.env.OAUTH_CLIENT_ID,
+        // clientSecret: process.env.OAUTH_CLIENT_SECRET,
+        // refreshToken: process.env.OAUTH_REFRESH_TOKEN,
       },
       tls: {
         rejectUnauthorized: false,
@@ -179,7 +185,7 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(409).json({
         status: false,
-        message: "Incorrect password",
+        message: "Incorrect password or user name",
       });
     }
     const token = await jwt.sign({ id: user._id }, process.env.TOKEN_STRING);
@@ -285,14 +291,16 @@ export const loginUsingPin = async (req, res) => {
   try {
     const { username } = req.params;
     const { pin } = req.body;
+
     const user = await User.findOne({ username });
+    
     const isPinCorrect = await bcryptjs.compare(pin, user.pin);
     if (!isPinCorrect) {
       return res.status(400).json({ message: "Incorrect Pin. Try again!" });
     }
     res.status(200).json({ message: "Login Successful" });
   } catch (err) {
-    res.status(500).json({ message: err.message });
+    res.status(500).json({message: err.message });
   }
 }
 

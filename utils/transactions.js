@@ -1,6 +1,5 @@
 import Transactions from "../models/transaction_model.js";
 import User from "../models/user_model.js";
-import admin from "firebase-admin";
 
 const creditAccount = async ({
   amount,
@@ -45,28 +44,20 @@ const creditAccount = async ({
     { session }
   );
   console.log(`Credit Successful`);
-  const message = {
-    notification: {
-      title: "Credit Successful",
-      body: `You just received ₦ ${amount} from ${fullNameTransactionEntity}`,
-    },
-    token: user.deviceToken,
-  };
+  // const message = {
+  //   notification: {
+  //     title: "Credit Successful",
+  //     body: `You just received ₦ ${amount} from ${fullNameTransactionEntity}`,
+  //   },
+  //   token: user.deviceToken,
+  // };
 
-  admin
-    .messaging()
-    .send(message)
-    .then((response) => {
-      console.log("Successfully sent message:", response);
-    })
-    .catch((error) => {
-      console.log("Error sending message:", error);
-    });
   return {
     statusCode: 201,
     message: "Credit Successful",
     data: { updatedWallet, transaction },
   };
+  
 };
 
 const debitAccount = async ({
@@ -119,28 +110,14 @@ const debitAccount = async ({
     { session }
   );
   console.log(`Debit Successful`);
-  const message = {
-    notification: {
-      title: "Debit",
-      body: `You just sent ₦ ${amount} to ${fullNameTransactionEntity}`,
-    },
-    token: user.deviceToken,
-  };
-
-  admin
-    .messaging()
-    .send(message)
-    .then((response) => {
-      console.log("Successfully sent message:", response);
-    })
-    .catch((error) => {
-      console.log("Error sending message:", error);
-    });
+  
   return {
     statusCode: 201,
     message: "Debit Successful",
     data: { updatedWallet, transaction },
   };
+
+
 };
 
 export {creditAccount, debitAccount}

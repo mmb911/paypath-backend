@@ -9,7 +9,7 @@ import jwt from"jsonwebtoken";
       req.token = token;
       next();
     } catch (errs) {
-      res.status(401).json({ message: "Token not veified,access denied" });
+      res.status(401).json({ message: "Token not verified,access denied" });
     }
   } else {
     res.status(401).json({ message: "No auth token, access denied" });

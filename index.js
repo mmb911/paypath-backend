@@ -1,7 +1,6 @@
 import express from "express";
 import  dotenv from "dotenv";
 import  mongoose from "mongoose";
-import admin from "firebase-admin";
 import authRouter from "./routes/auth_route.js";
 //import  balanceRouter from "./routes/balance_route";
 import balanceRouter from "./routes/balance_route.js";
@@ -13,17 +12,17 @@ import cors from "cors";
 //import Chat from "./models/chat_model";
 //import chatRouter from "./controllers/chat_controller";
 //import messageRouter from "./controllers/message_controller";
-import fs from "fs";
+
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
 
 const startServer = async ()=>{
-  const serviceAccount =JSON.parse(fs.readFileSync(new URL("./firebase-app.json", import.meta.url)));
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.databaseURL,
-  });
+  //const serviceAccount =JSON.parse(fs.readFileSync(new URL("./firebase-app.json", import.meta.url)));
+  // admin.initializeApp({
+  //   credential: admin.credential.cert(serviceAccount),
+  //   databaseURL: process.env.databaseURL,
+ // });
   
   app.use(express.json());
   app.use(cors());
@@ -49,11 +48,7 @@ const startServer = async ()=>{
     .catch((e) => {
       console.log(e);
       console.log("Unable to connect to MongoDB");
-    });
-  
-    
-  
-  
+    });  
 }
 
 startServer();

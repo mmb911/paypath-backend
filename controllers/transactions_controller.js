@@ -4,6 +4,7 @@ import { v4 } from "uuid";
 import Transactions from "../models/transaction_model.js";
 import { creditAccount, debitAccount } from "../utils/transactions.js";
 import User from "../models/user_model.js";
+import { login } from "./auth_controller.js";
 
 const transactionRouter = express.Router();
 
@@ -43,11 +44,12 @@ export const transfer = async (req, res) => {
         fullNameTransactionEntity: sendersUsername,
       }),
     ]);
-
+    
     // Filter out any failed operations
     const failedTxns = transferResult.filter(
-      (result) => result.statusCode !== 201
+      (result) => result.statusCode !== 201  
     );
+    
     if (failedTxns.length) {
       const errors = failedTxns.map((a) => a.message);
       await session.abortTransaction();
