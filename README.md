@@ -1,12 +1,8 @@
-# Pay Mobile Server
+# Pay Path Server
 
-<img src="assets/pay_mobile_server_advert.png" alt="Username Transfer Showcase" title="Pay Mobile Server Advert">
-
-## This is the official Nodejs server code for the <a href="https://github.com/adedayoniyi/Pay-Mobile-P2P-Money-Transfer-App">Pay Mobile P2P Money Transfer App</a> and the <a href="https://github.com/adedayoniyi/Pay-Mobile-Web-Admin">Pay Mobile Web Admin</a>
 
 ### QUICK START ⚡
 
-#### Visit: <a href="https://github.com/adedayoniyi/Pay-Mobile-Full-Stack"> Pay Mobile Full Stack </a> to access the full stack code of the software (i.e the Web Admin Front End and the Mobile Front End)
 
 ### You have to create a `.env` for the required environment variables as the one here has been removed
 
@@ -296,4 +292,3 @@ Pull requests are welcome. If you encounter any problem with the app or server, 
 
 ## License
 
-This project is licensed under the MIT License - see the <a href="https://github.com/adedayoniyi/Pay-Mobile-P2P-Money-Transfer-App/blob/main/LICENSE.md">LICENSE</a> file for details.
